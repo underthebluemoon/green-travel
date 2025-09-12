@@ -1,0 +1,30 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 20px;
+}
+
+.card {
+  padding: 10px;
+  border-radius: 7px;
+  background-color: #ffffff;
+  display: grid;
+  gap: 10px;
+  text-align: center;
+}
+
+.card-img {
+  padding-top: 70%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.card-title {
+  color: #333333;
+  font-weight: 700;
+}
+
+.card-period {
+  color: #777;
+}
