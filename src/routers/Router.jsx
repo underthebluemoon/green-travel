@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "../App";
-import Main from "../components/main.jsx";
+import Main from "../components/Main.jsx";
 import FestivalList from "../components/festivals/FestivalList.jsx";
 
 const router = createBrowserRouter([

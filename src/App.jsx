@@ -1,5 +1,4 @@
 import Header from './components/common/Header.jsx';
-import Main from './components/main.jsx';
 import { Outlet } from 'react-router-dom';
 import './App.css';
 

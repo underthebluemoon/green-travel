@@ -9,13 +9,16 @@
   padding: 10px;
   border-radius: 7px;
   background-color: #ffffff;
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   gap: 10px;
   text-align: center;
 }
 
 .card-img {
-  padding-top: 70%;
+  padding-top: 80%;
+  margin-bottom: 20px;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -27,4 +30,24 @@
 
 .card-period {
   color: #777;
+  margin-bottom: 10px;
+}
+
+.btn-addpage {
+  display: block;
+  width: 60%;
+  height: 50px;
+  border-radius: 10px;
+  margin: 20px auto 50px;
+}
+
+.event-start {
+  margin: 0 50px;
+}
+.eventstart-date {
+  border-radius: 5px;
+}
+.eventstart-btn {
+  border: 1px solid #333333;
+  border-radius: 10%;
 }
