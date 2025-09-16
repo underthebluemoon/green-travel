@@ -14,6 +14,7 @@
   justify-content: space-between;
   gap: 10px;
   text-align: center;
+  box-shadow: 1px 1px 2px #333333;
 }
 
 .card-img {
@@ -26,6 +27,7 @@
 .card-title {
   color: #333333;
   font-weight: 700;
+  font-size: 1.1rem;
 }
 
 .card-period {
@@ -37,8 +39,12 @@
   display: block;
   width: 60%;
   height: 50px;
+  border: 1px solid #333;
   border-radius: 10px;
   margin: 20px auto 50px;
+}
+.to-top {
+  display: fixed;
 }
 
 .event-start {
@@ -50,4 +56,7 @@
 .eventstart-btn {
   border: 1px solid #333333;
   border-radius: 10%;
+}
+.event-start :active {
+  color: rgb(105, 133, 158);
 }

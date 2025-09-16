@@ -1,13 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { festivalIndex } from "../thunks/festivalThunk.js";
+import { localStorageUtil } from "../../utils/localStorageUtil.js";
 
 const festivalSlice = createSlice({
   name: 'festivalSlice',
   initialState: {
     // list: null,  // 페스티벌 리스트 : case1. null
-    list : [],      // 페스티벌 리스트 : case2. 빈 배열
-    page: 1,        // 현재 페이지 번호
-    scrollEventFlg: true // 스크롤 이벤트 디바운싱 제어 플래그
+    // list : [],   // 페스티벌 리스트 : case2. 빈 배열
+    list : localStorageUtil.getFestivalList() ? localStorageUtil.getFestivalList() : [], // 페스티벌 리스트 : case3. 로컬 스토리지
+    // page: 0,        // 현재 페이지 번호 : page값을 pgae + 1 로 설정했기 때문
+    page: localStorageUtil.getFestivalPage() ? localStorageUtil.getFestivalPage() : 0,  // 페이지 : case2. 로컬 스토리지
+    // scrollEventFlg: true // 스크롤 이벤트 디바운싱 제어 플래그
+    scrollEventFlg: localStorageUtil.getFestivalScrollFlg() ? localStorageUtil.getFestivalScrollFlg() : true,  // 스크롤 이벤트 디바운싱 제어 플래그 case3
   }, 
   
   reducers: {
@@ -31,6 +35,13 @@ const festivalSlice = createSlice({
           // case2. state.list의 초기값을 [] 빈 배열로 한 경우
           state.list = [...state.list, ...action.payload.items.item];
           state.page = action.payload.pageNo;
+          console.log(action.payload.pageNo);
+          console.log(action.payload, state.scrollEventFlg);
+
+          // localstorage 재할당 = 저장
+          localStorageUtil.setFestivalList(state.list);
+          localStorageUtil.setFestivalPage(state.page);
+          localStorageUtil.setFestivalScrollFlg(state.scrollEventFlg);
 
           // 페이지를 업데이트 한 뒤, 디바운싱 플래그 true로 변경
           state.scrollEventFlg = true;
@@ -51,15 +62,15 @@ const festivalSlice = createSlice({
         // }
         // -----------------------------------------------------------
       })
-      .addMatcher(
-        action => action.type.endsWith('/pendding'),
-        state => {
-          console.log('처리중입니다.');
-        }
-      )
+      // .addMatcher(
+      //   action => action.type.endsWith('/pending'),
+      //   state => {
+      //     console.log('처리중입니다.');
+      //   }
+      // )
       .addMatcher(
         action => action.type.endsWith('/rejected'),
-        state => {
+        (state, action) => {
           console.log('에러 발생', action.error);
         }
       );

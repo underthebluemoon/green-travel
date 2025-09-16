@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './FestivalList.css';
 import { useEffect } from 'react';
 import { festivalIndex } from '../../store/thunks/festivalThunk.js';
-import { dateFomatter } from '../../utils/dateFormatterUtil.js';
+import { dateFormatter } from '../../utils/dateFormatterUtil.js';
 import { setScrollEventFlg } from '../../store/slices/festivalSlice.js';
 
 
@@ -11,7 +11,7 @@ function FestivalList() {
 
   const festivalList = useSelector(state => state.festival.list);
 
-  const page = useSelector(state => state.festival.page);
+  // const page = useSelector(state => state.festival.page);
 
   // 디바운싱 제어를 위해 플래그 가져옴
   const scrollEventFlg = useSelector(state => state.festival.scrollEventFlg);
@@ -31,22 +31,29 @@ function FestivalList() {
   // })
   
   useEffect(() => {
-    dispatch(festivalIndex(1));
-  }, []);
+    // 로컬 스토리지에서 저장된 날짜를 획득
+    //   저장된 날짜 없으면, 현재 날짜를 로컬스토리지에 저장
+    //   저장된 날짜가 있으면 아래 처리 속행
+    //     오늘 날짜랑 비교
+    //       저장된 날짜가 과거면 로컬 스토리지 및 스테이트 초기화
+    //       저장된 날짜가 과거가 아니면 처리속행
+    
 
-  useEffect(() => {
     // window에서 실행되는 event이므로, 컴포넌트가 unmount되어도 event는 존재
     // -> 다른 컴포넌트에서도 event 작동
     // -> 컴포넌트 unmount 시, event가 사라지도록 설정 필요
     window.addEventListener('scroll', addNextPage);
-
+    // 빈 배열인 경우 page1로 실행
+    if(festivalList.length === 0) {
+      dispatch(festivalIndex());
+    }
     // unmout 시, event가 사라지도록 cleanup function
     return () => {
       console.log('page 지운다!');
       window.removeEventListener('scroll', addNextPage);
     }
-
-  }, [page, scrollEventFlg]);
+    // 유지보수 관리를 위해 의존성배열 사용 지양
+  }, []);
   
   // // case 1. 다음 페이지 가져오기 (버튼 이벤트에 이용)
   // function addNextPage() {
@@ -58,14 +65,14 @@ function FestivalList() {
     // 스크롤 관련 처리
     const docHeight = document.documentElement.scrollHeight; // 문서의 Y축 총 길이
     const winHeight = window.innerHeight; // 윈도우의 Y축 총 길이
-    const nowHeight = window.scrollY; // 현재 스크롤의 Y축 위치
+    const nowHeight = Math.ceil(window.scrollY); // 현재 스크롤의 Y축 위치
     const viewheight = docHeight - winHeight; // 스크롤을 끝까지 내렸을 때의 Y축 위치
-
+    // console.log(viewheight, nowHeight, scrollEventFlg);
     // 스크롤이 100%에 도달했을 때 작동하도록 설정
     // + 디바운싱 설정 추가
     if(viewheight === nowHeight && scrollEventFlg) {
       dispatch(setScrollEventFlg(false));
-      dispatch(festivalIndex(page + 1));
+      dispatch(festivalIndex());
       console.log('추가 페이지 가져옴!');
     }
   }
@@ -83,11 +90,14 @@ function FestivalList() {
               <div className="card" key={item.contentid}>
                 <div className="card-img" style={{backgroundImage: `url('${item.firstimage}')`}}></div>
                 <p className="card-title">{item.title}</p>
-                <p className="card-period">{dateFomatter.withHyphenYMD(item.eventstartdate)} ~ {dateFomatter.withHyphenYMD(item.eventenddate)}</p>
+                <p className="card-period">{dateFormatter.withHyphenYMD(item.eventstartdate)} ~ {dateFormatter.withHyphenYMD(item.eventenddate)}</p>
               </div>
             )
           })
         }
+      </div>
+      <div className="forBtn">
+        <button className='btn-totop' type='button'>더 보기</button>
       </div>
       <button className='btn-addpage' type='button' onClick={addNextPage}>더 보기</button>
       {/* 페이징 처리
