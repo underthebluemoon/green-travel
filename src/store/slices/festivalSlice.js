@@ -35,8 +35,8 @@ const festivalSlice = createSlice({
           // case2. state.list의 초기값을 [] 빈 배열로 한 경우
           state.list = [...state.list, ...action.payload.items.item];
           state.page = action.payload.pageNo;
-          console.log(action.payload.pageNo);
-          console.log(action.payload, state.scrollEventFlg);
+          console.log('지금 페이지는', action.payload.pageNo);
+          // console.log(action.payload, state.scrollEventFlg);
 
           // localstorage 재할당 = 저장
           localStorageUtil.setFestivalList(state.list);
@@ -71,7 +71,7 @@ const festivalSlice = createSlice({
       .addMatcher(
         action => action.type.endsWith('/rejected'),
         (state, action) => {
-          console.log('에러 발생', action.error);
+          console.log('페이지 불러오기 에러 발생', action.error);
         }
       );
   }
@@ -83,4 +83,4 @@ export const {
   setScrollEventFlg,
 } = festivalSlice.actions;
 
-export default  festivalSlice.reducer;
+export default festivalSlice.reducer;

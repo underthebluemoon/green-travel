@@ -1,13 +1,17 @@
-import { useDispatch, useSelector } from 'react-redux';
 import './FestivalList.css';
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { festivalIndex } from '../../store/thunks/festivalThunk.js';
 import { dateFormatter } from '../../utils/dateFormatterUtil.js';
 import { setScrollEventFlg } from '../../store/slices/festivalSlice.js';
+// import { setFestivalInfo } from '../../store/slices/festivalShowSlice.js';
 
 
 function FestivalList() {
   const dispatch = useDispatch();
+  
+  const navigate = useNavigate();
 
   const festivalList = useSelector(state => state.festival.list);
 
@@ -31,14 +35,6 @@ function FestivalList() {
   // })
   
   useEffect(() => {
-    // 로컬 스토리지에서 저장된 날짜를 획득
-    //   저장된 날짜 없으면, 현재 날짜를 로컬스토리지에 저장
-    //   저장된 날짜가 있으면 아래 처리 속행
-    //     오늘 날짜랑 비교
-    //       저장된 날짜가 과거면 로컬 스토리지 및 스테이트 초기화
-    //       저장된 날짜가 과거가 아니면 처리속행
-    
-
     // window에서 실행되는 event이므로, 컴포넌트가 unmount되어도 event는 존재
     // -> 다른 컴포넌트에서도 event 작동
     // -> 컴포넌트 unmount 시, event가 사라지도록 설정 필요
@@ -49,7 +45,6 @@ function FestivalList() {
     }
     // unmout 시, event가 사라지도록 cleanup function
     return () => {
-      console.log('page 지운다!');
       window.removeEventListener('scroll', addNextPage);
     }
     // 유지보수 관리를 위해 의존성배열 사용 지양
@@ -73,8 +68,14 @@ function FestivalList() {
     if(viewheight === nowHeight && scrollEventFlg) {
       dispatch(setScrollEventFlg(false));
       dispatch(festivalIndex());
-      console.log('추가 페이지 가져옴!');
+      console.log('스크롤 이벤트 발생! 추가 페이지 가져옴!');
     }
+  }
+
+  // 상세페이지로 이동
+  function redirectShow(item) {
+    // dispatch(setFestivalInfo(item));
+    navigate(`/festivals/${item.contentid}`);
   }
 
   return (
@@ -87,7 +88,7 @@ function FestivalList() {
           // case2. state.list 초기값을 []로 한 경우 : list 배열이 1개 이상일 때 map()
           festivalList.length > 0 && festivalList.map(item => {
             return (
-              <div className="card" key={item.contentid}>
+              <div className="card" onClick={ () => {redirectShow(item)} } key={item.contentid}>
                 <div className="card-img" style={{backgroundImage: `url('${item.firstimage}')`}}></div>
                 <p className="card-title">{item.title}</p>
                 <p className="card-period">{dateFormatter.withHyphenYMD(item.eventstartdate)} ~ {dateFormatter.withHyphenYMD(item.eventenddate)}</p>
@@ -96,10 +97,10 @@ function FestivalList() {
           })
         }
       </div>
-      <div className="forBtn">
+      {/* <div className="forBtn">
         <button className='btn-totop' type='button'>더 보기</button>
       </div>
-      <button className='btn-addpage' type='button' onClick={addNextPage}>더 보기</button>
+      <button className='btn-addpage' type='button' onClick={addNextPage}>더 보기</button> */}
       {/* 페이징 처리
           1. 현재 page 저장하기 
        -> 2. request 시 page 설정 
