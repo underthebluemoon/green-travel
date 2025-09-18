@@ -1,8 +1,7 @@
 {
   "rewrites": [
-    {  // 어떤 경로로 와도
+    {
       "source": "/(.*)",
-      // index.html로 연결
       "destination": "/index.html"
     }
   ]
