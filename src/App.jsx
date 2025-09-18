@@ -4,6 +4,7 @@ import './App.css';
 import { useEffect } from 'react';
 import { localStorageUtil } from './utils/localStorageUtil.js';
 import { dateFormatter } from './utils/dateFormatterUtil.js';
+import BeforeInstallPrompt from './components/BeforeInstallPrompt.jsx';
 
 function App() {
 
@@ -29,7 +30,8 @@ function App() {
 
   return (
     <>
-      <Header></Header>
+      <BeforeInstallPrompt />
+      <Header />
       <main>
         <Outlet></Outlet>
       </main>

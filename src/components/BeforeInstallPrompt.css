@@ -1,0 +1,28 @@
+.prompt-container {
+  width: 100%;
+  height: 120px;
+  padding: 10px;
+  background-color: #F0EDDF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+}
+
+.prompt-info {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.prompt-btn {
+  width: 200px;
+  height: 50px;
+  font-size: 50;
+  background-color: #000;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
