@@ -1,0 +1,36 @@
+.staycard-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 20px;
+}
+
+.staycard {
+  padding: 10px;
+  border-radius: 7px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  text-align: center;
+  box-shadow: 1px 1px 2px #333333;
+}
+
+.staycard-img {
+  padding-top: 80%;
+  margin-bottom: 20px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.staycard-title {
+  color: #333333;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.staycard-addr {
+  color: #777;
+  margin-bottom: 10px;
+}

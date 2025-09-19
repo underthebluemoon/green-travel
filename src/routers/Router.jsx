@@ -3,6 +3,7 @@ import App from "../App";
 import Main from "../components/Main.jsx";
 import FestivalList from "../components/festivals/FestivalList.jsx";
 import FestivalShow from "../components/festivals/FestivalShow.jsx";
+import StayList from "../components/stay/StayList.jsx";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
                         // segment parameter `:key`, path부분에 지정
         path: 'festivals/:id',
         element: <FestivalShow />
+      },
+      {
+        path: '/stay',
+        element: <StayList />
       },
     ]
   }

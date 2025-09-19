@@ -1,0 +1,22 @@
+.navlink-container {
+  display: flex;
+  justify-content: center;
+}
+
+.navlink-center {
+  width: 60px;
+}
+.navlink-btn {
+  color: #333;
+  text-align: center;
+  line-height: 45px;
+  text-decoration: none;
+
+  background-color: #E5E2D5;
+  border: 2px solid #AAA;
+  border-radius: 7px;
+
+  display: block;
+  width: 150px;
+  height: 50px;
+}

@@ -1,5 +1,5 @@
 import Header from './components/common/Header.jsx';
-import { Outlet, ScrollRestoration } from 'react-router-dom';
+import { NavLink, Outlet, ScrollRestoration } from 'react-router-dom';
 import './App.css';
 import { useEffect } from 'react';
 import { localStorageUtil } from './utils/localStorageUtil.js';
@@ -32,6 +32,11 @@ function App() {
     <>
       <BeforeInstallPrompt />
       <Header />
+      <div className='navlink-container'>
+        <NavLink className='navlink-btn' to={'/festivals'}>🎈 축제 정보</NavLink>
+        <div className="navlink-center"></div>
+        <NavLink className='navlink-btn' to={'/stay'}>🎪 숙박 정보</NavLink>
+      </div>
       <main>
         <Outlet></Outlet>
       </main>
